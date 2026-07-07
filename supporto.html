@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supporto — SupeCard 1</title>
+  <meta name="description" content="Guide e supporto per risolvere i problemi più comuni con l'importazione CSV in SupeCard." />
+  <meta name="theme-color" content="#ff6334" />
+  <link rel="icon" type="image/png" href="img/LogoSupecard2.png" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            surface: '#f5f5f7',
+            card: '#ffffff',
+            accent: '#ff6334',
+            'accent-hover': '#e8552a',
+            slate: '#2c2d35',
+            'slate-light': '#6b6c75',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          borderRadius: {
+            '2xl': '1rem',
+            '3xl': '1.5rem',
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Google Fonts — Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f5f5f7;
+      color: #2c2d35;
+    }
+
+    .dotted-bg {
+      background-image: radial-gradient(circle, #d1d1d6 0.8px, transparent 0.8px);
+      background-size: 24px 24px;
+    }
+
+    .header-blur {
+      background: rgba(245, 245, 247, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .card-soft {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.04),
+        0 6px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .accent-bar {
+      width: 40px;
+      height: 4px;
+      background: #ff6334;
+      border-radius: 2px;
+    }
+
+    .btn-press {
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-press:active {
+      transform: scale(0.97);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body class="dotted-bg min-h-screen">
+
+  <!-- ════════════════════════════════════════════════════════
+       HEADER
+       ════════════════════════════════════════════════════════ -->
+  <header class="header-blur fixed top-0 left-0 right-0 z-50 border-b border-black/5">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-2.5 group">
+        <img
+          src="img/LogoSupecard2.png"
+          alt="SupeCard 1 Logo"
+          class="h-8 sm:h-9 w-auto transition-transform duration-300 group-hover:scale-105"
+        />
+        <span class="text-slate font-bold text-base sm:text-lg tracking-tight">
+          SupeCard
+        </span>
+      </a>
+
+      <!-- Nav -->
+      <div class="flex items-center gap-3 sm:gap-5">
+        <a
+          href="supporto.html"
+          class="text-sm font-semibold text-accent"
+        >
+          Supporto
+        </a>
+        <a
+          href="index.html#download"
+          class="btn-press inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white
+                 text-sm font-semibold px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl
+                 shadow-md shadow-accent/20 hover:shadow-lg hover:shadow-accent/30
+                 transition-all duration-200"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4"/>
+          </svg>
+          Scarica
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ════════════════════════════════════════════════════════
+         HERO SUPPORTO
+         ════════════════════════════════════════════════════════ -->
+    <section class="pt-28 sm:pt-36 pb-10 sm:pb-16 px-4 sm:px-6">
+      <div class="max-w-3xl mx-auto text-center">
+        <div class="accent-bar mx-auto mb-5 reveal"></div>
+        <h1 class="reveal text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate leading-none tracking-tight mb-4 sm:mb-6">
+          Supporto
+        </h1>
+        <p class="reveal text-lg sm:text-xl text-slate-light font-medium max-w-xl mx-auto leading-relaxed">
+          Guide per risolvere i problemi pi&ugrave; comuni con l'importazione dei file CSV.
+        </p>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         CONTENUTO PLACEHOLDER
+         ════════════════════════════════════════════════════════ -->
+    <section class="py-10 sm:py-16 px-4 sm:px-6">
+      <div class="max-w-3xl mx-auto">
+        <div class="reveal card-soft rounded-3xl p-8 sm:p-12 text-center">
+
+          <!-- Icona -->
+          <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 rounded-2xl bg-accent/10 flex items-center justify-center">
+            <svg class="w-8 h-8 sm:w-10 sm:h-10 text-accent" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.71-3.14a2.25 2.25 0 01-.36-3.72l6.42-5.37a2.25 2.25 0 012.46 0l6.42 5.37a2.25 2.25 0 01-.36 3.72l-5.71 3.14a2.25 2.25 0 01-2.16 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 22v-7"/>
+            </svg>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate tracking-tight mb-4">
+            In costruzione
+          </h2>
+
+          <p class="text-slate-light text-base sm:text-lg font-medium leading-relaxed max-w-md mx-auto mb-6">
+            Stiamo preparando le guide dettagliate per aiutarti con l'importazione CSV.
+            Al momento, i file CSV sono supportati tramite esportazione da <strong class="text-slate">Google Fogli</strong>.
+          </p>
+
+          <p class="text-slate-light text-sm leading-relaxed max-w-sm mx-auto">
+            Le guide saranno disponibili a breve. Resta sintonizzato!
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         TORNA ALLA HOME
+         ════════════════════════════════════════════════════════ -->
+    <section class="pb-10 sm:pb-16 px-4 sm:px-6">
+      <div class="max-w-3xl mx-auto text-center">
+        <a
+          href="index.html"
+          class="reveal btn-press inline-flex items-center gap-2 text-accent hover:text-accent-hover
+                 text-base font-semibold transition-colors duration-200"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+          </svg>
+          Torna alla home
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════════ -->
+  <footer class="border-t border-black/5 py-8 sm:py-10 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto text-center">
+      <p class="text-xs sm:text-sm text-slate-light font-medium tracking-wide">
+        SUPECARD 1.2.0 &mdash; Fatto con amore da DaniHawks
+      </p>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════════
+       SCROLL REVEAL
+       ════════════════════════════════════════════════════════ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const reveals = document.querySelectorAll('.reveal');
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.15,
+            rootMargin: '0px 0px -40px 0px',
+          }
+        );
+
+        reveals.forEach((el, i) => {
+          el.style.transitionDelay = `${i % 3 * 100}ms`;
+          observer.observe(el);
+        });
+      } else {
+        reveals.forEach((el) => el.classList.add('visible'));
+      }
+    });
+  </script>
+
+</body>
+</html>
