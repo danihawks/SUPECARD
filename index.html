@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SupeCard 1 — Dai tuoi appunti alla memoria</title>
+  <title>SupeCard 2 — Dai tuoi appunti alla memoria</title>
   <meta name="description" content="L'app desktop per studiare all'istante le flashcard generate da NotebookLM. Scarica gratis per Windows e Mac." />
   <meta name="theme-color" content="#ff6334" />
   <link rel="icon" type="image/png" href="img/LogoSupecard2.png" />
@@ -181,6 +181,379 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
+
+    /* ── Import CSV Animation ────────────────────────────── */
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    #flip-btn-container {
+      animation: btnFlip 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    #animated-cursor {
+      animation: cursorMove 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes btnFlip {
+      0%, 28% {
+        transform: rotateY(0deg) scale(1);
+      }
+      30% {
+        transform: rotateY(0deg) scale(0.94);
+      }
+      35%, 85% {
+        transform: rotateY(180deg) scale(1);
+      }
+      90%, 100% {
+        transform: rotateY(0deg) scale(1);
+      }
+    }
+
+    @keyframes cursorMove {
+      0% {
+        transform: translate3d(120px, 80px, 0) scale(1);
+        opacity: 0;
+      }
+      10% {
+        transform: translate3d(60px, 40px, 0) scale(1);
+        opacity: 1;
+      }
+      /* Hover around button */
+      15% {
+        transform: translate3d(70px, 20px, 0) scale(1);
+        opacity: 1;
+      }
+      22% {
+        transform: translate3d(40px, 30px, 0) scale(1);
+        opacity: 1;
+      }
+      /* Click */
+      28% {
+        transform: translate3d(0px, 0px, 0) scale(1);
+        opacity: 1;
+      }
+      30% {
+        transform: translate3d(0px, 0px, 0) scale(0.85);
+        opacity: 1;
+      }
+      32% {
+        transform: translate3d(0px, 0px, 0) scale(1);
+        opacity: 1;
+      }
+      /* Retreat and fade */
+      42% {
+        transform: translate3d(-100px, 50px, 0) scale(1);
+        opacity: 0;
+      }
+      100% {
+        transform: translate3d(120px, 80px, 0) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* ── Isola Errori Animation ──────────────────────────── */
+    .card-item {
+      opacity: 0;
+      transform: translate3d(0, 20px, 0) scale(0.9);
+      transition: all 0.5s ease;
+    }
+
+    /* Card 1: Success */
+    .card-success {
+      animation: cardSuccessAnim 8s infinite;
+    }
+    /* Card 2: Error 1 */
+    .card-error-1 {
+      animation: cardError1Anim 8s infinite;
+    }
+    /* Card 3: Success */
+    .card-success-2 {
+      animation: cardSuccess2Anim 8s infinite;
+    }
+    /* Card 4: Error 2 */
+    .card-error-2 {
+      animation: cardError2Anim 8s infinite;
+    }
+
+    /* Stack cards in Ripasso area */
+    .ripasso-card-1 {
+      animation: ripassoCard1Show 8s infinite;
+    }
+    .ripasso-card-2 {
+      animation: ripassoCard2Show 8s infinite;
+    }
+    .ripasso-empty-state {
+      animation: emptyStateHide 8s infinite;
+    }
+    
+    .ripasso-counter {
+      animation: counterColors 8s infinite;
+    }
+    .ripasso-counter::after {
+      content: "0";
+      animation: counterText 8s infinite;
+    }
+
+    /* Keyframes Card 1 (Success) */
+    @keyframes cardSuccessAnim {
+      0% { opacity: 0; transform: translate3d(0, 30px, -50px) scale(0.85); }
+      3% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+      15% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+      20% { opacity: 0; transform: translate3d(-120px, -40px, 0) scale(0.9) rotate(-10deg); }
+      100% { opacity: 0; }
+    }
+
+    /* Keyframes Card 2 (Error 1 -> moves to Ripasso) */
+    @keyframes cardError1Anim {
+      0%, 18% { opacity: 0; transform: translate3d(0, 30px, -50px) scale(0.85); }
+      21% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+      33% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+      /* Mobile default: slide down */
+      38% { opacity: 0; transform: translate3d(0, 260px, 0) scale(0.7) rotate(5deg); }
+      100% { opacity: 0; }
+    }
+
+    /* Keyframes Card 3 (Success) */
+    @keyframes cardSuccess2Anim {
+      0%, 38% { opacity: 0; transform: translate3d(0, 30px, -50px) scale(0.85); }
+      41% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+      53% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+      58% { opacity: 0; transform: translate3d(-120px, -40px, 0) scale(0.9) rotate(-10deg); }
+      100% { opacity: 0; }
+    }
+
+    /* Keyframes Card 4 (Error 2 -> moves to Ripasso) */
+    @keyframes cardError2Anim {
+      0%, 58% { opacity: 0; transform: translate3d(0, 30px, -50px) scale(0.85); }
+      61% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+      71% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+      /* Mobile default: slide down */
+      76% { opacity: 0; transform: translate3d(0, 260px, 0) scale(0.7) rotate(5deg); }
+      100% { opacity: 0; }
+    }
+
+    /* Desktop overrides for card slide directions */
+    @media (min-width: 768px) {
+      @keyframes cardError1Anim {
+        0%, 18% { opacity: 0; transform: translate3d(0, 30px, -50px) scale(0.85); }
+        21% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+        33% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+        /* Desktop: slide right to Ripasso area */
+        38% { opacity: 0; transform: translate3d(240px, 0, 0) scale(0.7) rotate(5deg); }
+        100% { opacity: 0; }
+      }
+
+      @keyframes cardError2Anim {
+        0%, 58% { opacity: 0; transform: translate3d(0, 30px, -50px) scale(0.85); }
+        61% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+        71% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+        /* Desktop: slide right to Ripasso area */
+        76% { opacity: 0; transform: translate3d(240px, 0, 0) scale(0.7) rotate(5deg); }
+        100% { opacity: 0; }
+      }
+    }
+
+    /* Ripasso Cards appearing */
+    @keyframes ripassoCard1Show {
+      0%, 37% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.9) rotate(0deg); }
+      38%, 95% { opacity: 1; transform: translate3d(-4px, 4px, 0) scale(1) rotate(-3deg); }
+      98%, 100% { opacity: 0; }
+    }
+
+    @keyframes ripassoCard2Show {
+      0%, 75% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.9) rotate(0deg); }
+      76%, 95% { opacity: 1; transform: translate3d(4px, -4px, 0) scale(1) rotate(3deg); }
+      98%, 100% { opacity: 0; }
+    }
+
+    /* Empty state hide/show */
+    @keyframes emptyStateHide {
+      0%, 37% { opacity: 1; }
+      38%, 95% { opacity: 0; }
+      98%, 100% { opacity: 1; }
+    }
+
+    /* Counter Text */
+    @keyframes counterText {
+      0%, 37% { content: "0"; }
+      38%, 75% { content: "1"; }
+      76%, 95% { content: "2"; }
+      98%, 100% { content: "0"; }
+    }
+
+    /* Counter Colors */
+    @keyframes counterColors {
+      0%, 37% { background-color: rgba(255, 99, 52, 0.1); color: #ff6334; }
+      38%, 95% { background-color: #ff6334; color: #ffffff; }
+      98%, 100% { background-color: rgba(255, 99, 52, 0.1); color: #ff6334; }
+    }
+
+    /* ── Studio Veloce Animation ─────────────────────────── */
+    .studio-card {
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, z-index 0.5s ease;
+    }
+
+    /* Cards Animations */
+    .studio-card-fail {
+      animation: cardFailAnim 6s infinite;
+    }
+    .studio-card-pass {
+      animation: cardPassAnim 6s infinite;
+    }
+
+    /* Pointer Animation */
+    #studio-pointer {
+      animation: pointerStudioAnim 6s infinite;
+    }
+
+    /* Button Press Animations */
+    #btn-non-so {
+      animation: btnNonSoAnim 6s infinite;
+    }
+    #btn-so {
+      animation: btnSoAnim 6s infinite;
+    }
+
+    /* Keyframes */
+    @keyframes cardFailAnim {
+      0%, 15% {
+        transform: translate3d(0, 0, 0) scale(1);
+        z-index: 5;
+        opacity: 1;
+      }
+      /* Clicked 'Non la so' -> Slide to bottom of stack */
+      18% {
+        transform: translate3d(-60px, -10px, 0) scale(0.95) rotate(-5deg);
+        z-index: 5;
+        opacity: 0.9;
+      }
+      25%, 55% {
+        transform: translate3d(0, -8px, 0) scale(0.92);
+        z-index: 1;
+        opacity: 0.7;
+      }
+      60%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+        z-index: 5;
+        opacity: 1;
+      }
+    }
+
+    @keyframes cardPassAnim {
+      0%, 15% {
+        transform: translate3d(0, -4px, 0) scale(0.96);
+        z-index: 3;
+        opacity: 0.9;
+      }
+      22%, 45% {
+        transform: translate3d(0, 0, 0) scale(1);
+        z-index: 5;
+        opacity: 1;
+      }
+      /* Clicked 'La so' -> Fly away */
+      48% {
+        transform: translate3d(140px, -40px, 0) scale(0.9) rotate(15deg);
+        z-index: 5;
+        opacity: 0;
+      }
+      55%, 100% {
+        transform: translate3d(0, -4px, 0) scale(0.96);
+        z-index: 3;
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes pointerStudioAnim {
+      0% {
+        transform: translate3d(80px, 60px, 0);
+        opacity: 0;
+      }
+      10% {
+        transform: translate3d(-75px, 45px, 0);
+        opacity: 1;
+      }
+      /* Click Non la so */
+      13% {
+        transform: translate3d(-75px, 45px, 0) scale(0.8);
+      }
+      16% {
+        transform: translate3d(-75px, 45px, 0) scale(1);
+      }
+      /* Move to La so */
+      30% {
+        transform: translate3d(25px, 45px, 0);
+        opacity: 1;
+      }
+      /* Click La so */
+      43% {
+        transform: translate3d(25px, 45px, 0) scale(0.8);
+      }
+      46% {
+        transform: translate3d(25px, 45px, 0) scale(1);
+      }
+      /* Retreat and fade */
+      56% {
+        transform: translate3d(80px, 60px, 0);
+        opacity: 0;
+      }
+      100% {
+        transform: translate3d(80px, 60px, 0);
+        opacity: 0;
+      }
+    }
+
+    @keyframes btnNonSoAnim {
+      0%, 12% {
+        transform: scale(1);
+        background-color: rgb(254 242 242);
+      }
+      13%, 15% {
+        transform: scale(0.93);
+        background-color: rgb(254 226 226);
+      }
+      16%, 100% {
+        transform: scale(1);
+        background-color: rgb(254 242 242);
+      }
+    }
+
+    @keyframes btnSoAnim {
+      0%, 42% {
+        transform: scale(1);
+        background-color: rgb(236 253 245);
+      }
+      43%, 45% {
+        transform: scale(0.93);
+        background-color: rgb(209 250 229);
+      }
+      46%, 100% {
+        transform: scale(1);
+        background-color: rgb(236 253 245);
+      }
+    }
+
+    /* ── Kanban Dashboard Mockup Animation ──────────────── */
+    .kanban-column-track-1 {
+      animation: scrollUp 12s linear infinite;
+    }
+    .kanban-column-track-2 {
+      animation: scrollDown 10s linear infinite;
+    }
+    .kanban-column-track-3 {
+      animation: scrollUp 16s linear infinite;
+    }
+
+    @keyframes scrollUp {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    @keyframes scrollDown {
+      0% { transform: translateY(-50%); }
+      100% { transform: translateY(0); }
+    }
   </style>
 </head>
 
@@ -190,15 +563,15 @@
        HEADER
        ════════════════════════════════════════════════════════ -->
   <header class="header-blur fixed top-0 left-0 right-0 z-50 border-b border-black/5">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
       <!-- Logo -->
       <a href="#" class="flex items-center gap-2.5 group">
         <img
           src="img/LogoSupecard2.png"
-          alt="SupeCard 1 Logo"
-          class="h-8 sm:h-9 w-auto transition-transform duration-300 group-hover:scale-105"
+          alt="SupeCard 2 Logo"
+          class="h-10 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
         />
-        <span class="text-slate font-bold text-base sm:text-lg tracking-tight">
+        <span class="text-slate font-extrabold text-xl sm:text-2xl tracking-tight">
           SupeCard
         </span>
       </a>
@@ -207,7 +580,7 @@
       <div class="flex items-center gap-3 sm:gap-5">
         <a
           href="supporto.html"
-          class="text-sm font-semibold text-slate-light hover:text-slate transition-colors duration-200"
+          class="text-base sm:text-lg font-extrabold text-slate hover:text-accent tracking-wide transition-colors duration-200 mr-2 sm:mr-4"
         >
           Supporto
         </a>
@@ -237,15 +610,9 @@
       <div class="max-w-3xl mx-auto text-center">
         <!-- Badge -->
         <div class="reveal inline-flex items-center gap-2 bg-white/70 backdrop-blur border border-black/5
-                    rounded-full px-4 py-1.5 text-xs font-medium text-slate-light mb-2 sm:mb-3">
-          <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-          Versione 1.2.0
-        </div>
-        <br />
-        <div class="reveal inline-flex items-center gap-2 bg-white/70 backdrop-blur border border-black/5
                     rounded-full px-4 py-1.5 text-xs font-medium text-slate-light mb-6 sm:mb-8">
-          <span class="w-2 h-2 rounded-full bg-slate-light/50"></span>
-          Versione 2.0 in sviluppo
+          <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+          Versione 2.1
         </div>
 
         <!-- Headline -->
@@ -259,49 +626,74 @@
 
         <!-- Subtitle -->
         <p class="reveal text-lg sm:text-xl text-slate-light font-medium max-w-xl mx-auto leading-relaxed mb-8 sm:mb-10">
-          L'app desktop per studiare all'istante le flashcard da NotebookLM o dal tuo Excel.
+          L'app desktop per studiare all'istante le flashcard da NotebookLM o dal tuo Google Fogli.
         </p>
 
-        <!-- Download Buttons -->
-        <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+        <!-- Download Buttons Container -->
+        <div class="reveal flex flex-col items-center gap-4 max-w-2xl mx-auto w-full px-4">
+          <!-- GitHub Repository Button (First) -->
           <a
-            href="https://drive.google.com/file/d/1wI0GMukSfLKmMhIiUl5pZ6hKEaYgkqTI/view?usp=sharing"
+            href="https://github.com/danihawks/supecard-app"
             target="_blank"
             rel="noopener"
-            id="download-windows-btn"
-            class="btn-press w-full sm:w-auto inline-flex items-center justify-center gap-3
-                   bg-accent hover:bg-accent-hover text-white
+            id="github-repo-btn"
+            class="btn-press w-full inline-flex items-center justify-center gap-2.5
+                   bg-[#24292e] hover:bg-[#1b1f23] text-white
                    text-base font-semibold px-6 py-3.5 rounded-2xl
-                   shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35
+                   shadow-lg shadow-black/10 hover:shadow-xl
                    transition-all duration-200"
             style="min-height: 52px;"
           >
-            <!-- Windows icon -->
+            <!-- GitHub icon -->
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M3 12.5v-8l7-1v9h-7zm8-9.2l10-1.3v10h-10v-8.7zm-8 10.2h7v9l-7-1v-8zm8 .5h10v10l-10-1.3v-8.7z"/>
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
-            Scarica per Windows
-            <span class="text-white/60 text-sm font-normal">.exe</span>
+            Scopri la repository su GitHub! Il codice è OpenSource!
           </a>
 
-          <a
-            href="https://drive.google.com/file/d/142V3m-3aqrav6LA07vn3so9EvDObPjN_/view?usp=sharing"
-            target="_blank"
-            rel="noopener"
-            id="download-mac-btn"
-            class="btn-press btn-glass w-full sm:w-auto inline-flex items-center justify-center gap-3
-                   text-slate
-                   text-base font-semibold px-6 py-3.5 rounded-2xl
-                   hover:shadow-lg transition-all duration-200"
-            style="min-height: 52px;"
-          >
-            <!-- Apple icon -->
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-            </svg>
-            Scarica per Mac
-            <span class="text-slate-light text-sm font-normal">.dmg</span>
-          </a>
+          <!-- Windows and Mac (Subdivided same row) -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full">
+            <a
+              href="https://drive.google.com/file/d/12D5HlstZEX71KSryX0XuH9jGD-e8096x/view?usp=sharing"
+              target="_blank"
+              rel="noopener"
+              id="download-windows-btn"
+              class="btn-press w-full sm:w-1/2 inline-flex items-center justify-center gap-3
+                     bg-accent hover:bg-accent-hover text-white
+                     text-base font-semibold px-6 py-3.5 rounded-2xl
+                     shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35
+                     transition-all duration-200"
+              style="min-height: 52px;"
+            >
+              <!-- Windows icon -->
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 12.5v-8l7-1v9h-7zm8-9.2l10-1.3v10h-10v-8.7zm-8 10.2h7v9l-7-1v-8zm8 .5h10v10l-10-1.3v-8.7z"/>
+              </svg>
+              Scarica per Windows
+              <span class="text-white/60 text-sm font-normal">.exe</span>
+            </a>
+
+            <a
+              href="https://drive.google.com/file/d/13vDPJsg3QP6KxKMHYOoIV7Xxad3F-K_7/view?usp=sharing"
+              target="_blank"
+              rel="noopener"
+              id="download-mac-btn"
+              class="btn-press btn-glass w-full sm:w-1/2 inline-flex items-center justify-center gap-3
+                     text-slate
+                     text-base font-semibold px-6 py-3.5 rounded-2xl
+                     hover:shadow-lg transition-all duration-200"
+              style="min-height: 52px;"
+            >
+              <!-- Apple icon -->
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+              </svg>
+              Scarica per Mac
+              <span class="text-slate-light text-sm font-normal">.dmg</span>
+            </a>
+          </div>
+        </div>
+
         </div>
       </div>
     </section>
@@ -320,27 +712,57 @@
                 Importazione Lampo
               </h2>
               <p class="text-slate-light text-base sm:text-lg font-medium leading-relaxed max-w-md">
-                Prendi il CSV da NotebookLM o dal tuo Excel, trascinalo e sei pronto.
+                Prendi il CSV da NotebookLM o dal tuo Google Fogli, trascinalo e sei pronto.
                 Nessuna configurazione, zero perdite di tempo.
               </p>
             </div>
 
-            <!-- CTA Button -->
-            <div class="flex-1 p-6 sm:p-8 lg:p-10 flex items-center justify-center">
-              <a
-                href="#download"
-                id="import-csv-btn"
-                class="btn-press inline-flex items-center justify-center gap-3
-                       bg-accent hover:bg-accent-hover text-white
-                       text-xl sm:text-2xl font-bold px-10 sm:px-14 py-5 sm:py-6 rounded-2xl
-                       shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35
-                       transition-all duration-200 w-full max-w-xs"
-              >
-                <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m0 0l-6-6m6 6l6-6"/>
+            <!-- CTA Button with Cursor & Flip Animation -->
+            <div class="flex-1 p-6 sm:p-8 lg:p-10 flex items-center justify-center relative overflow-visible" style="perspective: 1000px;">
+              <!-- Flipping Button Container -->
+              <div class="w-full max-w-xs h-[72px] sm:h-[84px] relative" id="flip-btn-container" style="transform-style: preserve-3d;">
+                
+                <!-- Front Side: Importa CSV -->
+                <div class="absolute inset-0 backface-hidden" style="backface-visibility: hidden; transform: rotateY(0deg);">
+                  <a
+                    href="#download"
+                    id="import-csv-btn"
+                    class="inline-flex items-center justify-center gap-3
+                           bg-accent hover:bg-accent-hover text-white
+                           text-xl sm:text-2xl font-bold rounded-2xl
+                           shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35
+                           transition-all duration-200 w-full h-full"
+                  >
+                    <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m0 0l-6-6m6 6l6-6"/>
+                    </svg>
+                    Importa CSV
+                  </a>
+                </div>
+
+                <!-- Back Side: CSV Importato! -->
+                <div class="absolute inset-0 backface-hidden" style="backface-visibility: hidden; transform: rotateY(180deg);">
+                  <div
+                    class="inline-flex items-center justify-center gap-3
+                           bg-emerald-500 text-white
+                           text-xl sm:text-2xl font-bold rounded-2xl
+                           shadow-lg shadow-emerald-500/25 w-full h-full"
+                  >
+                    <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    CSV importato!
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Animated Cursor (Pointer) -->
+              <div class="absolute pointer-events-none z-10" id="animated-cursor" style="transform: translate3d(120px, 80px, 0); opacity: 0; top: 50%; left: 50%; margin-top: -10px; margin-left: -10px;">
+                <svg class="w-8 h-8 text-slate filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.3)]" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M4.5 3v15.2l3.8-3.8 2.2 4.9 2.7-1.2-2.2-4.9 5-1.2L4.5 3z" />
                 </svg>
-                Importa CSV
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -359,7 +781,7 @@
             Isola i tuoi errori.
           </h2>
           <p class="text-slate-light text-base sm:text-lg font-medium leading-relaxed max-w-lg mx-auto">
-            Quando sbagli una carta, SupeCard 1 la sposta da sola nell'Area Ripasso.
+            Quando sbagli una carta, SupeCard 2 la sposta da sola nell'Area Ripasso.
             Resta l&igrave; finch&eacute; non la memorizzi davvero. Focus totale dove serve.
           </p>
         </div>
@@ -371,11 +793,119 @@
               <div class="device-dots">
                 <span></span><span></span><span></span>
               </div>
-              <img
-                src="img/Area Ripasso.jpg"
-                alt="Area Ripasso automatica di SupeCard"
-                loading="lazy"
-              />
+              
+              <!-- Animated Dashboard Mockup -->
+              <div class="relative w-full min-h-[380px] sm:min-h-[460px] bg-slate/5 rounded-b-lg overflow-hidden flex flex-col md:flex-row p-4 sm:p-6 gap-6 select-none text-slate">
+                <!-- Left: Studio Panel -->
+                <div class="flex-1 bg-white rounded-2xl border border-black/5 p-4 sm:p-5 flex flex-col relative overflow-hidden shadow-sm">
+                  <div class="flex items-center justify-between border-b border-black/5 pb-3 mb-4">
+                    <span class="text-xs sm:text-sm font-semibold text-slate-light">Sessione di Studio</span>
+                    <span class="text-xs font-bold text-accent bg-accent/10 px-2.5 py-1 rounded-full">Ripasso Attivo</span>
+                  </div>
+                  
+                  <!-- Card Stack Area -->
+                  <div class="flex-1 flex items-center justify-center relative min-h-[220px]">
+                    
+                    <!-- Card 1: Success (Green Check) -->
+                    <div class="card-item card-success absolute w-[160px] sm:w-[200px] bg-white border border-black/5 rounded-xl shadow-md p-4 flex flex-col justify-between" style="min-height: 130px;">
+                      <div class="text-left">
+                        <div class="h-2 w-12 bg-slate-light/20 rounded mb-3"></div>
+                        <div class="h-3 w-full bg-slate/15 rounded mb-2"></div>
+                        <div class="h-3 w-2/3 bg-slate/15 rounded"></div>
+                      </div>
+                      <div class="flex justify-between items-center mt-6">
+                        <span class="text-[10px] text-slate-light/60">Carta 1</span>
+                        <div class="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Card 2: Error 1 (Red X) -> Slides to Ripasso -->
+                    <div class="card-item card-error-1 absolute w-[160px] sm:w-[200px] bg-white border border-black/5 rounded-xl shadow-md p-4 flex flex-col justify-between" style="min-height: 130px;">
+                      <div class="text-left">
+                        <div class="h-2 w-8 bg-slate-light/20 rounded mb-3"></div>
+                        <div class="h-3 w-11/12 bg-slate/15 rounded mb-2"></div>
+                        <div class="h-3 w-1/2 bg-slate/15 rounded"></div>
+                      </div>
+                      <div class="flex justify-between items-center mt-6">
+                        <span class="text-[10px] text-slate-light/60">Carta 2</span>
+                        <div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center text-rose-600">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Card 3: Success (Green Check) -->
+                    <div class="card-item card-success-2 absolute w-[160px] sm:w-[200px] bg-white border border-black/5 rounded-xl shadow-md p-4 flex flex-col justify-between" style="min-height: 130px;">
+                      <div class="text-left">
+                        <div class="h-2 w-16 bg-slate-light/20 rounded mb-3"></div>
+                        <div class="h-3 w-full bg-slate/15 rounded mb-2"></div>
+                        <div class="h-3 w-3/4 bg-slate/15 rounded"></div>
+                      </div>
+                      <div class="flex justify-between items-center mt-6">
+                        <span class="text-[10px] text-slate-light/60">Carta 3</span>
+                        <div class="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Card 4: Error 2 (Red X) -> Slides to Ripasso -->
+                    <div class="card-item card-error-2 absolute w-[160px] sm:w-[200px] bg-white border border-black/5 rounded-xl shadow-md p-4 flex flex-col justify-between" style="min-height: 130px;">
+                      <div class="text-left">
+                        <div class="h-2 w-10 bg-slate-light/20 rounded mb-3"></div>
+                        <div class="h-3 w-10/12 bg-slate/15 rounded mb-2"></div>
+                        <div class="h-3 w-5/6 bg-slate/15 rounded"></div>
+                      </div>
+                      <div class="flex justify-between items-center mt-6">
+                        <span class="text-[10px] text-slate-light/60">Carta 4</span>
+                        <div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center text-rose-600">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Right: Ripasso Panel (Orange Box) -->
+                <div class="w-full md:w-[260px] bg-accent/5 rounded-2xl border border-accent/20 p-4 sm:p-5 flex flex-col relative overflow-hidden">
+                  <div class="flex items-center justify-between border-b border-accent/10 pb-3 mb-4">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-accent animate-pulse"></span>
+                      <span class="text-xs sm:text-sm font-semibold text-slate">Area Ripasso</span>
+                    </div>
+                    <span class="ripasso-counter text-xs font-bold px-2.5 py-1 rounded-full transition-all duration-200"></span>
+                  </div>
+
+                  <!-- Ripasso Card Placement Area -->
+                  <div class="flex-1 flex flex-col items-center justify-center relative min-h-[160px] border-2 border-dashed border-accent/15 rounded-xl">
+                    <span class="text-accent/50 text-[11px] font-semibold absolute top-4">Errori isolati</span>
+                    
+                    <!-- Placeholder stacked cards in Ripasso -->
+                    <div class="ripasso-stack-card ripasso-card-1 absolute w-[130px] h-[80px] bg-white border border-accent/20 rounded-lg shadow-sm flex items-center justify-center opacity-0 scale-90">
+                      <div class="w-5 h-5 rounded-full bg-rose-100 flex items-center justify-center text-rose-600">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                      </div>
+                    </div>
+                    <div class="ripasso-stack-card ripasso-card-2 absolute w-[130px] h-[80px] bg-white border border-accent/20 rounded-lg shadow-sm flex items-center justify-center opacity-0 scale-90">
+                      <div class="w-5 h-5 rounded-full bg-rose-100 flex items-center justify-center text-rose-600">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                      </div>
+                    </div>
+
+                    <div class="ripasso-empty-state flex flex-col items-center gap-1.5 opacity-100">
+                      <svg class="w-7 h-7 text-accent/30" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                      </svg>
+                      <span class="text-slate-light/50 text-[10px]">Vuoto - Ottimo lavoro!</span>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
         </div>
@@ -400,15 +930,120 @@
             </p>
           </div>
           <div class="px-4 sm:px-6 pb-4 sm:pb-6 mt-auto">
-            <div class="device-frame">
+                        <div class="device-frame">
               <div class="device-dots">
                 <span></span><span></span><span></span>
               </div>
-              <img
-                src="img/Dashboard.jpg"
-                alt="Dashboard di SupeCard"
-                loading="lazy"
-              />
+              
+              <!-- Animated Kanban Dashboard -->
+              <div class="relative w-full h-[250px] sm:h-[300px] bg-slate/5 rounded-b-lg overflow-hidden flex p-3 sm:p-4 gap-3 select-none text-slate font-sans">
+                
+                <!-- Column 1: Matematica -->
+                <div class="flex-1 bg-white/60 rounded-xl border border-black/5 p-2 flex flex-col overflow-hidden relative shadow-sm">
+                  <div class="text-[10px] font-bold text-accent pb-1.5 border-b border-black/5 mb-2">Matematica (5)</div>
+                  <div class="flex-1 overflow-hidden relative">
+                    <div class="kanban-column-track-1 flex flex-col gap-2 absolute w-full">
+                      <!-- Card items (duplicated to repeat seamlessly) -->
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-8 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-full bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-10 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-5/6 bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-6 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-4/5 bg-slate/10 rounded"></div>
+                      </div>
+                      <!-- Duplicates for loop -->
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-8 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-full bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-10 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-5/6 bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-6 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-4/5 bg-slate/10 rounded"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Column 2: Storia -->
+                <div class="flex-1 bg-white/60 rounded-xl border border-black/5 p-2 flex flex-col overflow-hidden relative shadow-sm">
+                  <div class="text-[10px] font-bold text-accent pb-1.5 border-b border-black/5 mb-2">Storia (3)</div>
+                  <div class="flex-1 overflow-hidden relative">
+                    <div class="kanban-column-track-2 flex flex-col gap-2 absolute w-full">
+                      <!-- Card items (duplicated to repeat seamlessly) -->
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-12 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-11/12 bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-8 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-full bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-10 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-2/3 bg-slate/10 rounded"></div>
+                      </div>
+                      <!-- Duplicates for loop -->
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-12 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-11/12 bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-8 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-full bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-10 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-2/3 bg-slate/10 rounded"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Column 3: Scienze -->
+                <div class="flex-1 bg-white/60 rounded-xl border border-black/5 p-2 flex flex-col overflow-hidden relative shadow-sm">
+                  <div class="text-[10px] font-bold text-accent pb-1.5 border-b border-black/5 mb-2">Scienze (12)</div>
+                  <div class="flex-1 overflow-hidden relative">
+                    <div class="kanban-column-track-3 flex flex-col gap-2 absolute w-full">
+                      <!-- Card items (duplicated to repeat seamlessly) -->
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-6 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-full bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-10 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-4/5 bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-8 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-5/6 bg-slate/10 rounded"></div>
+                      </div>
+                      <!-- Duplicates for loop -->
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-6 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-full bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-10 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-4/5 bg-slate/10 rounded"></div>
+                      </div>
+                      <div class="bg-white border border-black/5 rounded-lg p-2 shadow-xs border-l-2 border-l-accent">
+                        <div class="h-1.5 w-8 bg-accent/20 rounded mb-1"></div>
+                        <div class="h-2 w-5/6 bg-slate/10 rounded"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
         </div>
@@ -429,11 +1064,71 @@
               <div class="device-dots">
                 <span></span><span></span><span></span>
               </div>
-              <img
-                src="img/Domanda.jpg"
-                alt="Modalità studio di SupeCard"
-                loading="lazy"
-              />
+              
+              <!-- Animated Studio Session Mockup -->
+              <div class="relative w-full h-[280px] sm:h-[320px] bg-slate/5 rounded-b-lg overflow-hidden flex flex-col items-center justify-between p-4 sm:p-5 select-none text-slate">
+                
+                <!-- Deck Stack Area -->
+                <div class="flex-1 w-full flex items-center justify-center relative min-h-[140px] sm:min-h-[160px]">
+                  
+                  <!-- Card C (Background Stack decoration) -->
+                  <div class="studio-card studio-card-bg-2 absolute w-[160px] sm:w-[200px] bg-white/70 border border-black/5 rounded-xl shadow p-4 flex flex-col justify-between" style="min-height: 100px; transform: translate3d(0, -8px, 0) scale(0.92); z-index: 1;">
+                    <div class="h-2 w-1/3 bg-slate-light/10 rounded"></div>
+                    <div class="h-2.5 w-full bg-slate/10 rounded mt-2"></div>
+                  </div>
+
+                  <!-- Card B (Background Stack decoration) -->
+                  <div class="studio-card studio-card-bg-1 absolute w-[160px] sm:w-[200px] bg-white/90 border border-black/5 rounded-xl shadow p-4 flex flex-col justify-between" style="min-height: 100px; transform: translate3d(0, -4px, 0) scale(0.96); z-index: 2;">
+                    <div class="h-2 w-1/3 bg-slate-light/10 rounded"></div>
+                    <div class="h-2.5 w-full bg-slate/10 rounded mt-2"></div>
+                  </div>
+
+                  <!-- Card 1: Will be "Non la so" (Goes to back of deck) -->
+                  <div class="studio-card studio-card-fail absolute w-[160px] sm:w-[200px] bg-white border border-black/5 rounded-xl shadow-md p-4 flex flex-col justify-between" style="min-height: 100px; z-index: 5;">
+                    <div class="text-left">
+                      <div class="flex items-center gap-1.5 mb-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                        <div class="h-2 w-12 bg-slate-light/20 rounded"></div>
+                      </div>
+                      <div class="h-3 w-11/12 bg-slate/15 rounded mb-2"></div>
+                      <div class="h-3 w-2/3 bg-slate/15 rounded"></div>
+                    </div>
+                  </div>
+
+                  <!-- Card 2: Will be "La so" (Flies away) -->
+                  <div class="studio-card studio-card-pass absolute w-[160px] sm:w-[200px] bg-white border border-black/5 rounded-xl shadow-md p-4 flex flex-col justify-between" style="min-height: 100px; z-index: 4;">
+                    <div class="text-left">
+                      <div class="flex items-center gap-1.5 mb-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <div class="h-2 w-16 bg-slate-light/20 rounded"></div>
+                      </div>
+                      <div class="h-3 w-full bg-slate/15 rounded mb-2"></div>
+                      <div class="h-3 w-3/4 bg-slate/15 rounded"></div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="w-full max-w-[220px] flex items-center justify-between gap-3 mt-3 relative z-10">
+                  <div id="btn-non-so" class="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-rose-50 border border-rose-100 rounded-xl text-[10px] sm:text-[11px] font-bold text-rose-600 shadow-sm transition-all duration-150">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                    Non la so
+                  </div>
+                  <div id="btn-so" class="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-emerald-50 border border-emerald-100 rounded-xl text-[10px] sm:text-[11px] font-bold text-emerald-600 shadow-sm transition-all duration-150">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    La so
+                  </div>
+                </div>
+
+                <!-- Animated cursor pointer -->
+                <div class="absolute pointer-events-none z-20" id="studio-pointer" style="transform: translate3d(80px, 60px, 0); opacity: 0; top: 50%; left: 50%; margin-top: 35px; margin-left: -10px;">
+                  <svg class="w-5 h-5 text-slate filter drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M4.5 3v15.2l3.8-3.8 2.2 4.9 2.7-1.2-2.2-4.9 5-1.2L4.5 3z" />
+                  </svg>
+                </div>
+
+              </div>
             </div>
           </div>
         </div>
@@ -441,7 +1136,7 @@
       </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
+        <!-- ════════════════════════════════════════════════════════
          SECOND CTA (Repeat Download)
          ════════════════════════════════════════════════════════ -->
     <section id="download" class="py-10 sm:py-14 px-4 sm:px-6">
@@ -451,11 +1146,11 @@
             Pronto a studiare?
           </h2>
           <p class="text-white/60 text-base sm:text-lg font-medium mb-8 max-w-md mx-auto">
-            Scarica SupeCard 1 e inizia subito.
+            Scarica SupeCard 2 e inizia subito.
           </p>
           <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
-              href="https://drive.google.com/file/d/1wI0GMukSfLKmMhIiUl5pZ6hKEaYgkqTI/view?usp=sharing"
+              href="https://drive.google.com/file/d/12D5HlstZEX71KSryX0XuH9jGD-e8096x/view?usp=sharing"
               target="_blank"
               rel="noopener"
               id="cta-windows-btn"
@@ -472,7 +1167,7 @@
               <span class="text-white/50 text-sm font-normal">.exe</span>
             </a>
             <a
-              href="https://drive.google.com/file/d/142V3m-3aqrav6LA07vn3so9EvDObPjN_/view?usp=sharing"
+              href="https://drive.google.com/file/d/13vDPJsg3QP6KxKMHYOoIV7Xxad3F-K_7/view?usp=sharing"
               target="_blank"
               rel="noopener"
               id="cta-mac-btn"
@@ -490,6 +1185,28 @@
               <span class="text-white/40 text-sm font-normal">.dmg</span>
             </a>
           </div>
+
+          <!-- GitHub Repository Button -->
+          <div class="reveal mt-4 sm:mt-5 flex justify-center">
+            <a
+              href="https://github.com/danihawks/supecard-app"
+              target="_blank"
+              rel="noopener"
+              id="cta-github-repo-btn"
+              class="btn-press w-full sm:w-auto inline-flex items-center justify-center gap-2.5
+                     bg-white/10 hover:bg-white/15 text-white
+                     border border-white/15 hover:border-white/25
+                     text-base font-semibold px-6 py-3.5 rounded-2xl
+                     transition-all duration-200"
+              style="min-height: 52px;"
+            >
+              <!-- GitHub icon -->
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              Scopri la repository su GitHub! Il codice è OpenSource!
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -502,7 +1219,7 @@
   <footer class="border-t border-black/5 py-8 sm:py-10 px-4 sm:px-6">
     <div class="max-w-6xl mx-auto text-center">
       <p class="text-xs sm:text-sm text-slate-light font-medium tracking-wide">
-        SUPECARD 1.2.0 &mdash; Fatto con amore da DaniHawks
+        SUPECARD 2.1 &mdash; Fatto con amore da DaniHawks
       </p>
     </div>
   </footer>
